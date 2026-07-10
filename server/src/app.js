@@ -15,6 +15,8 @@ app.use(helmet());
 app.use(morgan("dev"));
 app.use(cookieParser());
 
+const authRoutes = require("./routes/auth.routes");
+
 // Test Route
 app.get("/", (req, res) => {
     res.json({
@@ -27,5 +29,7 @@ app.get("/", (req, res) => {
 // app.use("/api/auth", authRoutes);
 // app.use("/api/users", userRoutes);
 // app.use("/api/documents", documentRoutes);
+
+app.use("/api/auth", authRoutes);
 
 module.exports = app;
