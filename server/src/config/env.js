@@ -4,7 +4,7 @@ module.exports = {
     PORT: process.env.PORT || 5000,
 
     MONGO_URL: process.env.MONGO_URL,
-    MONGODB_URI: process.env.MONGODB_URI,
+    MONGODB_URI: mongodb://127.0.0.1:27017/syncdoc
 
     JWT_SECRET: process.env.JWT_SECRET,
     JWT_EXPIRES_IN: process.env.JWT_EXPIRES_IN || "7d",
