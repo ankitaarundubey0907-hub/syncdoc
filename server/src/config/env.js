@@ -1,0 +1,16 @@
+<<<<<<< HEAD
+=======
+require("dotenv").config();
+
+module.exports = {
+    PORT: process.env.PORT || 5000,
+
+    MONGO_URL: process.env.MONGO_URL,
+    MONGODB_URI: mongodb://127.0.0.1:27017/syncdoc
+
+    JWT_SECRET: process.env.JWT_SECRET,
+    JWT_EXPIRES_IN: process.env.JWT_EXPIRES_IN || "7d",
+
+    CLIENT_URL: process.env.CLIENT_URL || "http://localhost:5173",
+};
+>>>>>>> 29e6186 (Completed Register feature)
