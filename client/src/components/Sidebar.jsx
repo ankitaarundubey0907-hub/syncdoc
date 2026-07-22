@@ -1,4 +1,12 @@
-import { FaHome, FaFileAlt, FaPlus, FaUser, FaSignOutAlt } from "react-icons/fa";
+import { NavLink } from "react-router-dom";
+import {
+  FaHome,
+  FaFileAlt,
+  FaPlus,
+  FaUser,
+  FaSignOutAlt,
+} 
+from "react-icons/fa";
 function Sidebar() {
   return (
     <div className="w-64 h-screen bg-blue-700 text-white p-6">
@@ -7,34 +15,62 @@ function Sidebar() {
         SyncDoc
       </h1>
 
-      <ul className="space-y-6">
+    <ul className="space-y-3">
 
-       <li className="flex items-center gap-3 cursor-pointer hover:text-gray-200">
-  <FaHome />
-  <span>Dashboard</span>
-</li>
+  <NavLink
+    to="/dashboard"
+    className={({ isActive }) =>
+      `flex items-center gap-3 p-3 rounded-lg ${
+        isActive ? "bg-blue-900" : "hover:bg-blue-600"
+      }`
+    }
+  >
+    <FaHome />
+    <span>Dashboard</span>
+  </NavLink>
 
-<li className="flex items-center gap-3 cursor-pointer hover:text-gray-200">
-  <FaFileAlt />
-  <span>My Documents</span>
-</li>
+  <NavLink
+    to="/documents"
+    className={({ isActive }) =>
+      `flex items-center gap-3 p-3 rounded-lg ${
+        isActive ? "bg-blue-900" : "hover:bg-blue-600"
+      }`
+    }
+  >
+    <FaFileAlt />
+    <span>My Documents</span>
+  </NavLink>
 
-<li className="flex items-center gap-3 cursor-pointer hover:text-gray-200">
-  <FaPlus />
-  <span>Create Document</span>
-</li>
+  <NavLink
+    to="/create-document"
+    className={({ isActive }) =>
+      `flex items-center gap-3 p-3 rounded-lg ${
+        isActive ? "bg-blue-900" : "hover:bg-blue-600"
+      }`
+    }
+  >
+    <FaPlus />
+    <span>Create Document</span>
+  </NavLink>
 
-<li className="flex items-center gap-3 cursor-pointer hover:text-gray-200">
-  <FaUser />
-  <span>Profile</span>
-</li>
+  <NavLink
+    to="/profile"
+    className={({ isActive }) =>
+      `flex items-center gap-3 p-3 rounded-lg ${
+        isActive ? "bg-blue-900" : "hover:bg-blue-600"
+      }`
+    }
+  >
+    <FaUser />
+    <span>Profile</span>
+  </NavLink>
 
-<li className="flex items-center gap-3 cursor-pointer hover:text-gray-200">
-  <FaSignOutAlt />
-  <span>Logout</span>
-</li>
+  <button className="flex items-center gap-3 p-3 rounded-lg hover:bg-blue-600 w-full text-left">
+    <FaSignOutAlt />
+    <span>Logout</span>
+  </button>
 
-      </ul>
+</ul>
 
     </div>
   );
