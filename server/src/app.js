@@ -15,7 +15,10 @@ app.use(helmet());
 app.use(morgan("dev"));
 app.use(cookieParser());
 
+// Routes
 const authRoutes = require("./routes/auth.routes");
+const documentRoutes = require("./routes/document.routes");
+const commentRoutes = require("./routes/comment.routes");
 
 // Test Route
 app.get("/", (req, res) => {
@@ -25,11 +28,9 @@ app.get("/", (req, res) => {
     });
 });
 
-// Future Routes
-// app.use("/api/auth", authRoutes);
-// app.use("/api/users", userRoutes);
-// app.use("/api/documents", documentRoutes);
-
+// API Routes
 app.use("/api/auth", authRoutes);
+app.use("/api/documents", documentRoutes);
+app.use("/api/comments", commentRoutes);
 
 module.exports = app;
