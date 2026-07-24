@@ -1,29 +1,30 @@
 const { Server } = require("socket.io");
 const registerSocketEvents = require("./socketEvents");
 
-let io;
-
 function initializeSocket(server) {
-    io = new Server(server, {
+
+    const io = new Server(server, {
+
         cors: {
-            origin: "*",
-            methods: ["GET", "POST"]
+
+            origin: process.env.CLIENT_URL || "http://localhost:5173",
+
+            credentials: true
+
         }
+
     });
 
-    io.on("connection", (socket) => {
-        console.log(`Client Connected: ${socket.id}`);
+    io.on("connection", socket => {
+
+        console.log("Socket Connected:", socket.id);
 
         registerSocketEvents(io, socket);
 
-        socket.on("disconnect", () => {
-            console.log(`Client Disconnected: ${socket.id}`);
-        });
     });
 
     return io;
+
 }
 
-module.exports = {
-    initializeSocket
-};
+module.exports = initializeSocket;
