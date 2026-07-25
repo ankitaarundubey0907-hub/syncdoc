@@ -18,10 +18,19 @@ const documentSchema = new mongoose.Schema({
         required: true,
     },
 
-    collaborators: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-    }, ],
+    collaborators: [
+  {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User"
+    },
+    role: {
+      type: String,
+      enum: ["viewer", "editor"],
+      default: "viewer"
+    }
+  }
+],
 
     isPublic: {
         type: Boolean,
