@@ -1,69 +1,115 @@
-const Comment = require("../models/Comment");
+const commentService = require("../services/comment.service");
 
-// Create a new comment
-const createComment = async(req, res) => {
-    try {
-        const { document, user, comment } = req.body;
+class CommentController {
 
-        const newComment = await Comment.create({
-            document,
-            user,
-            comment,
-        });
+    // Add Comment
+    async addComment(req, res) {
 
-        res.status(201).json({
-            success: true,
-            message: "Comment added successfully",
-            data: newComment,
-        });
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: error.message,
-        });
+        try {
+
+            const comment = await commentService.addComment(
+                req.params.documentId,
+                req.user.id,
+                req.body.comment
+            );
+
+            res.status(201).json({
+                success: true,
+                message: "Comment added successfully.",
+                data: comment,
+            });
+
+        } catch (error) {
+
+            res.status(400).json({
+                success: false,
+                message: error.message,
+            });
+
+        }
+
     }
-};
 
-// Get all comments
-const getAllComments = async(req, res) => {
-    try {
-        const comments = await Comment.find()
-            .populate("user", "name email")
-            .populate("document", "title");
+    // Get Comments
+    async getComments(req, res) {
 
-        res.status(200).json({
-            success: true,
-            data: comments,
-        });
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: error.message,
-        });
+        try {
+
+            const comments = await commentService.getComments(
+                req.params.documentId,
+                req.user.id
+            );
+
+            res.status(200).json({
+                success: true,
+                data: comments,
+            });
+
+        } catch (error) {
+
+            res.status(400).json({
+                success: false,
+                message: error.message,
+            });
+
+        }
+
     }
-};
 
-// Get comments of a specific document
-const getCommentsByDocument = async(req, res) => {
-    try {
-        const comments = await Comment.find({
-            document: req.params.documentId,
-        }).populate("user", "name email");
+    // Update Comment
+    async updateComment(req, res) {
 
-        res.status(200).json({
-            success: true,
-            data: comments,
-        });
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: error.message,
-        });
+        try {
+
+            const comment = await commentService.updateComment(
+                req.params.commentId,
+                req.user.id,
+                req.body.comment
+            );
+
+            res.status(200).json({
+                success: true,
+                message: "Comment updated successfully.",
+                data: comment,
+            });
+
+        } catch (error) {
+
+            res.status(400).json({
+                success: false,
+                message: error.message,
+            });
+
+        }
+
     }
-};
 
-module.exports = {
-    createComment,
-    getAllComments,
-    getCommentsByDocument,
-};
+    // Delete Comment
+    async deleteComment(req, res) {
+
+        try {
+
+            const result = await commentService.deleteComment(
+                req.params.commentId,
+                req.user.id
+            );
+
+            res.status(200).json({
+                success: true,
+                message: result.message,
+            });
+
+        } catch (error) {
+
+            res.status(400).json({
+                success: false,
+                message: error.message,
+            });
+
+        }
+
+    }
+
+}
+
+module.exports = new CommentController();

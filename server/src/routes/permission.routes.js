@@ -1,18 +1,32 @@
 const express = require("express");
+
 const router = express.Router();
 
-const {
-  shareDocument,
-  updatePermission,
-  removePermission
-} = require("../controllers/permission.controller");
-
 const authMiddleware = require("../middleware/auth.middleware");
+const permissionController = require("../controllers/permission.controller");
 
-router.post("/share", authMiddleware, shareDocument);
+router.get(
+    "/read/:documentId",
+    authMiddleware,
+    permissionController.canRead
+);
 
-router.put("/:id", authMiddleware, updatePermission);
+router.get(
+    "/write/:documentId",
+    authMiddleware,
+    permissionController.canWrite
+);
 
-router.delete("/:id", authMiddleware, removePermission);
+router.post(
+    "/:documentId/collaborator",
+    authMiddleware,
+    permissionController.addCollaborator
+);
+
+router.delete(
+    "/:documentId/collaborator",
+    authMiddleware,
+    permissionController.removeCollaborator
+);
 
 module.exports = router;

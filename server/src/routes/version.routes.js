@@ -1,18 +1,27 @@
 const express = require("express");
-const router = express.Router();
 
-const {
-  saveVersion,
-  getVersions,
-  restoreVersion
-} = require("../controllers/version.controller");
+const router = express.Router();
 
 const authMiddleware = require("../middleware/auth.middleware");
 
-router.post("/:documentId", authMiddleware, saveVersion);
+const versionController = require("../controllers/version.controller");
 
-router.get("/:documentId", authMiddleware, getVersions);
+router.post(
+    "/:documentId",
+    authMiddleware,
+    versionController.createVersion
+);
 
-router.post("/restore/:versionId", authMiddleware, restoreVersion);
+router.get(
+    "/:documentId",
+    authMiddleware,
+    versionController.getVersions
+);
+
+router.get(
+    "/single/:versionId",
+    authMiddleware,
+    versionController.getVersion
+);
 
 module.exports = router;

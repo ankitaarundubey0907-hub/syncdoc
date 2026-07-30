@@ -1,15 +1,17 @@
-exports.joinRoom = (socket, documentId) => {
+class RoomManager {
 
-    socket.join(documentId);
+    joinRoom(socket, roomId) {
 
-    console.log(`${socket.id} joined ${documentId}`);
+        socket.join(roomId);
 
-};
+    }
 
-exports.leaveRoom = (socket, documentId) => {
+    leaveRoom(socket, roomId) {
 
-    socket.leave(documentId);
+        socket.leave(roomId);
 
-    console.log(`${socket.id} left ${documentId}`);
+    }
 
-};
+}
+
+module.exports = new RoomManager();
