@@ -1,4 +1,4 @@
-const Comment = require("../models/comment.model");
+const Comment = require("../models/Comment");
 const permissionService = require("./permission.service");
 
 class CommentService {

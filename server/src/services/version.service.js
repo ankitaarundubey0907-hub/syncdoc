@@ -1,5 +1,5 @@
-const Version = require("../models/version.model");
-const Document = require("../models/document.model");
+const Version = require("../models/Version");
+const Document = require("../models/Document");
 const permissionService = require("./permission.service");
 
 class VersionService {
