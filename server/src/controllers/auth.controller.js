@@ -18,12 +18,15 @@ class AuthController {
 
         } catch (error) {
 
-            res.status(400).json({
-                success: false,
-                message: error.message,
-            });
+    console.error("REGISTER ERROR:");
+    console.error(error.stack);
 
-        }
+    res.status(400).json({
+        success: false,
+        message: error.message,
+    });
+
+}
 
     }
 
@@ -67,7 +70,7 @@ class AuthController {
             });
 
         } catch (error) {
-
+          console.error(error);
             res.status(404).json({
                 success: false,
                 message: error.message,

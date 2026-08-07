@@ -36,7 +36,7 @@ class DocumentService {
 
         return await Document.findById(documentId)
             .populate("owner", "username email")
-            .populate("collaborators", "username email");
+            .populate("collaborators.user", "username email");
 
     }
 
@@ -108,7 +108,7 @@ class DocumentService {
         return await Document.find({
             $or: [
                 { owner: userId },
-                { collaborators: userId }
+                { "collaborators.user": userId }
             ]
         })
         .populate("owner", "username email")

@@ -1,3 +1,4 @@
+const permissionRoutes = require("./routes/permission.routes");
 const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
@@ -32,5 +33,6 @@ app.get("/", (req, res) => {
 app.use("/api/auth", authRoutes);
 app.use("/api/documents", documentRoutes);
 app.use("/api/comments", commentRoutes);
+app.use("/api/permissions", permissionRoutes);
 
 module.exports = app;
