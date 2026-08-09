@@ -1,5 +1,8 @@
+
+const versionService = require("./version.service");
 const Document = require("../models/Document");
 const permissionService = require("./permission.service");
+const activityService = require("./activity.service");
 
 class DocumentService {
 
@@ -15,6 +18,13 @@ class DocumentService {
             collaborators: [],
             isPublic: false
         });
+        await activityService.log(
+    document._id,
+    userId,
+    "DOCUMENT_CREATED",
+    "Document created"
+);
+
 
         return document;
 
@@ -36,7 +46,7 @@ class DocumentService {
 
         return await Document.findById(documentId)
             .populate("owner", "username email")
-            .populate("collaborators", "username email");
+            .populate("collaborators.user", "username email");
 
     }
 
@@ -74,6 +84,17 @@ class DocumentService {
 
         await document.save();
 
+await versionService.createVersion(
+    documentId,
+    userId
+);
+
+await activityService.log(
+    documentId,
+    userId,
+    "DOCUMENT_UPDATED",
+    "Document updated"
+);
         return document;
 
     }
@@ -108,7 +129,7 @@ class DocumentService {
         return await Document.find({
             $or: [
                 { owner: userId },
-                { collaborators: userId }
+                { "collaborators.user": userId }
             ]
         })
         .populate("owner", "username email")
