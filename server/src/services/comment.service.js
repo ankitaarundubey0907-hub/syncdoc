@@ -1,5 +1,6 @@
-const Comment = require("../models/comment.model");
+const Comment = require("../models/Comment");
 const permissionService = require("./permission.service");
+const activityService = require("./activity.service");
 
 class CommentService {
 
@@ -16,6 +17,13 @@ class CommentService {
             user: userId,
             comment: commentText
         });
+
+        await activityService.log(
+    documentId,
+    userId,
+    "COMMENT_ADDED",
+    "Comment added"
+);
 
         return comment;
     }
@@ -52,6 +60,14 @@ class CommentService {
 
         await comment.save();
 
+        await activityService.log(
+    comment.document,
+    userId,
+    "COMMENT_UPDATED",
+    "Comment updated"
+);
+
+
         return comment;
     }
 
@@ -68,6 +84,13 @@ class CommentService {
         }
 
         await Comment.findByIdAndDelete(commentId);
+
+        await activityService.log(
+    comment.document,
+    userId,
+    "COMMENT_DELETED",
+    "Comment deleted"
+);
 
         return {
             message: "Comment deleted successfully."
