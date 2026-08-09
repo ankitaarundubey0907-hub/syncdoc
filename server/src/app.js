@@ -1,3 +1,4 @@
+const activityRoutes = require("./routes/activity.routes");
 const permissionRoutes = require("./routes/permission.routes");
 const express = require("express");
 const cors = require("cors");
@@ -17,9 +18,11 @@ app.use(morgan("dev"));
 app.use(cookieParser());
 
 // Routes
+
 const authRoutes = require("./routes/auth.routes");
 const documentRoutes = require("./routes/document.routes");
 const commentRoutes = require("./routes/comment.routes");
+const versionRoutes = require("./routes/version.routes");
 
 // Test Route
 app.get("/", (req, res) => {
@@ -34,5 +37,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/documents", documentRoutes);
 app.use("/api/comments", commentRoutes);
 app.use("/api/permissions", permissionRoutes);
+app.use("/api/version", versionRoutes);
+app.use("/api/activity", activityRoutes);
 
 module.exports = app;
