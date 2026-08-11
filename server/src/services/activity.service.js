@@ -1,4 +1,4 @@
-const ActivityLog = require("../models/activityLog.model");
+const ActivityLog = require("../models/ActivityLog");
 
 class ActivityService {
 

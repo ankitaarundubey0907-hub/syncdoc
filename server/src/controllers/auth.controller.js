@@ -1,56 +1,112 @@
-const User = require("../models/User");
-const generateToken = require("../utils/generateToken");
+const authService = require("../services/auth.service");
 
-// Register User
-const register = async (req, res) => {
-  try {
-    const { username, email, password } = req.body;
+class AuthController {
 
-    if (!username || !email || !password) {
-      return res.status(400).json({
+    // Register User
+    async register(req, res) {
+
+        try {
+
+            const result = await authService.register(req.body);
+
+            res.status(201).json({
+                success: true,
+                message: "User registered successfully.",
+                token: result.token,
+                user: result.user,
+            });
+
+        } catch (error) {
+
+    console.error("REGISTER ERROR:");
+    console.error(error.stack);
+
+    res.status(400).json({
         success: false,
-        message: "All fields are required",
-      });
+        message: error.message,
+    });
+
+}
+
     }
 
-    const existingUser = await User.findOne({ email });
+    // Login User
+    async login(req, res) {
 
-    if (existingUser) {
-      return res.status(409).json({
-        success: false,
-        message: "Email already registered",
-      });
+        try {
+
+            const { email, password } = req.body;
+
+            const result = await authService.login(email, password);
+
+            res.status(200).json({
+                success: true,
+                message: "Login successful.",
+                token: result.token,
+                user: result.user,
+            });
+
+        } catch (error) {
+
+            res.status(401).json({
+                success: false,
+                message: error.message,
+            });
+
+        }
+
     }
 
-    const user = await User.create({
-      username,
-      email,
-      password,
-    });
+    // Get Logged-in User Profile
+    async getProfile(req, res) {
 
-    const token = generateToken(user._id);
+        try {
 
-    res.status(201).json({
-      success: true,
-      message: "User registered successfully",
-      token,
-      user: {
-        id: user._id,
-        username: user.username,
-        email: user.email,
-      },
-    });
-  } catch (error) {
-    // 👇 Ye line add ki hai
-    console.log("REGISTER ERROR:", error);
+            const user = await authService.getProfile(req.user.id);
 
-    res.status(500).json({
-      success: false,
-      message: error.message,
-    });
-  }
-};
+            res.status(200).json({
+                success: true,
+                user,
+            });
 
-module.exports = {
-  register,
-};
+        } catch (error) {
+          console.error(error);
+            res.status(404).json({
+                success: false,
+                message: error.message,
+            });
+
+        }
+
+    }
+
+    // Update User Profile
+    async updateProfile(req, res) {
+
+        try {
+
+            const user = await authService.updateProfile(
+                req.user.id,
+                req.body
+            );
+
+            res.status(200).json({
+                success: true,
+                message: "Profile updated successfully.",
+                user,
+            });
+
+        } catch (error) {
+
+            res.status(400).json({
+                success: false,
+                message: error.message,
+            });
+
+        }
+
+    }
+
+}
+
+module.exports = new AuthController();
