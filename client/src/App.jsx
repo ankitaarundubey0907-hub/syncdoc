@@ -8,7 +8,8 @@ import MyDocuments from "./pages/MyDocuments";
 import CreateDocument from "./pages/CreateDocument";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
-
+import ViewDocument from "./pages/ViewDocument";
+import EditDocument from "./pages/EditDocument";
 
 function App() {
   return (
@@ -16,12 +17,14 @@ function App() {
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
-      
+
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/documents" element={<MyDocuments />} />
       <Route path="/create-document" element={<CreateDocument />} />
       <Route path="/profile" element={<Profile />} />
       <Route path="*" element={<NotFound />} />
+      <Route path="/documents/:id" element={<ViewDocument />} />
+      <Route path="/documents/:id/edit" element={<EditDocument />} />
     </Routes>
   );
 }
