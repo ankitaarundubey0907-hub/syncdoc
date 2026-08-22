@@ -12,12 +12,10 @@ function Navbar() {
 
         <div className="flex gap-8 text-lg">
 
-          <Link
-            to="/"
+          <Link to="/project-info">Home</Link>"
             className="hover:text-blue-600 font-medium"
-          >
-            Home
-          </Link>
+    
+
 
           <Link
             to="/login"

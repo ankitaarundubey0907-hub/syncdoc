@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import API from "../services/api";
+import socket from "../services/socket";
 
 function EditDocument() {
   const { id } = useParams();
@@ -23,7 +24,47 @@ function EditDocument() {
     };
 
     fetchDocument();
+
+    // Join the document's Socket.IO room
+    socket.emit("join-document", id);
+
+    // Receive changes from other users
+    const handleDocumentUpdate = ({ title, content }) => {
+      setTitle(title);
+      setContent(content);
+    };
+
+    socket.on("document-update", handleDocumentUpdate);
+
+    // Remove listener when leaving the page
+    return () => {
+      socket.off("document-update", handleDocumentUpdate);
+    };
   }, [id]);
+
+  const handleTitleChange = (e) => {
+    const newTitle = e.target.value;
+
+    setTitle(newTitle);
+
+    socket.emit("document-change", {
+      documentId: id,
+      title: newTitle,
+      content,
+    });
+  };
+
+  const handleContentChange = (e) => {
+    const newContent = e.target.value;
+
+    setContent(newContent);
+
+    socket.emit("document-change", {
+      documentId: id,
+      title,
+      content: newContent,
+    });
+  };
 
   const handleUpdate = async () => {
     try {
@@ -36,6 +77,7 @@ function EditDocument() {
       navigate("/documents");
     } catch (error) {
       console.log(error);
+
       alert(
         error.response?.data?.message || "Failed to update document"
       );
@@ -57,7 +99,7 @@ function EditDocument() {
           <input
             type="text"
             value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            onChange={handleTitleChange}
             className="w-full border rounded-lg p-3 outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
@@ -70,7 +112,7 @@ function EditDocument() {
           <textarea
             rows="12"
             value={content}
-            onChange={(e) => setContent(e.target.value)}
+            onChange={handleContentChange}
             className="w-full border rounded-lg p-3 outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
