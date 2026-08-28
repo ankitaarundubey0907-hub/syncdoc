@@ -12,10 +12,19 @@ function Navbar() {
 
         <div className="flex gap-8 text-lg">
 
+<<<<<<< HEAD
           <Link to="/project-info">Home</Link>"
             className="hover:text-blue-600 font-medium"
     
 
+=======
+          <Link
+            to="/"
+            className="hover:text-blue-600 font-medium"
+          >
+            Home
+          </Link>
+>>>>>>> origin/main
 
           <Link
             to="/login"

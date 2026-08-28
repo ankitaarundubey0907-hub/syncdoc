@@ -5,16 +5,22 @@ import API from "../services/api";
 function Profile() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+<<<<<<< HEAD
   const [showEdit, setShowEdit] = useState(false);
   const [editUsername, setEditUsername] = useState("");
 const [editEmail, setEditEmail] = useState("");
+=======
+>>>>>>> origin/main
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProfile = async () => {
       try {
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> origin/main
         const response = await API.get("/auth/profile");
         setUser(response.data.user);
       } catch (error) {
@@ -31,6 +37,7 @@ const [editEmail, setEditEmail] = useState("");
 
     fetchProfile();
   }, [navigate]);
+<<<<<<< HEAD
 const handleEditClick = () => {
   setEditUsername(user.username || "");
   setEditEmail(user.email || "");
@@ -56,6 +63,9 @@ const handleUpdateProfile = async () => {
     );
   }
 };
+=======
+
+>>>>>>> origin/main
   const handleLogout = () => {
     localStorage.removeItem("token");
     navigate("/login");
@@ -94,6 +104,7 @@ const handleUpdateProfile = async () => {
         </div>
 
         <div className="mt-10 space-y-4">
+<<<<<<< HEAD
          <button
   onClick={handleEditClick}
   className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700"
@@ -137,6 +148,11 @@ const handleUpdateProfile = async () => {
     </div>
   </div>
 )}
+=======
+          <button className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700">
+            Edit Profile
+          </button>
+>>>>>>> origin/main
 
           <button className="w-full bg-yellow-500 text-white py-3 rounded-lg hover:bg-yellow-600">
             Change Password
