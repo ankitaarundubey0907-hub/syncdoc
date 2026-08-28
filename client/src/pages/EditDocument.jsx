@@ -1,10 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import API from "../services/api";
-<<<<<<< HEAD
-import socket from "../services/socket";
-=======
->>>>>>> origin/main
 
 function EditDocument() {
   const { id } = useParams();
@@ -27,53 +23,8 @@ function EditDocument() {
     };
 
     fetchDocument();
-<<<<<<< HEAD
-
-    // Join the document's Socket.IO room
-    socket.emit("join-document", id);
-
-    // Receive changes from other users
-    const handleDocumentUpdate = ({ title, content }) => {
-      setTitle(title);
-      setContent(content);
-    };
-
-    socket.on("document-update", handleDocumentUpdate);
-
-    // Remove listener when leaving the page
-    return () => {
-      socket.off("document-update", handleDocumentUpdate);
-    };
   }, [id]);
 
-  const handleTitleChange = (e) => {
-    const newTitle = e.target.value;
-
-    setTitle(newTitle);
-
-    socket.emit("document-change", {
-      documentId: id,
-      title: newTitle,
-      content,
-    });
-  };
-
-  const handleContentChange = (e) => {
-    const newContent = e.target.value;
-
-    setContent(newContent);
-
-    socket.emit("document-change", {
-      documentId: id,
-      title,
-      content: newContent,
-    });
-  };
-
-=======
-  }, [id]);
-
->>>>>>> origin/main
   const handleUpdate = async () => {
     try {
       await API.put(`/documents/${id}`, {
@@ -85,10 +36,6 @@ function EditDocument() {
       navigate("/documents");
     } catch (error) {
       console.log(error);
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/main
       alert(
         error.response?.data?.message || "Failed to update document"
       );
@@ -110,11 +57,7 @@ function EditDocument() {
           <input
             type="text"
             value={title}
-<<<<<<< HEAD
-            onChange={handleTitleChange}
-=======
             onChange={(e) => setTitle(e.target.value)}
->>>>>>> origin/main
             className="w-full border rounded-lg p-3 outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
@@ -127,11 +70,7 @@ function EditDocument() {
           <textarea
             rows="12"
             value={content}
-<<<<<<< HEAD
-            onChange={handleContentChange}
-=======
             onChange={(e) => setContent(e.target.value)}
->>>>>>> origin/main
             className="w-full border rounded-lg p-3 outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
@@ -156,8 +95,4 @@ function EditDocument() {
   );
 }
 
-<<<<<<< HEAD
 export default EditDocument;
-=======
-export default EditDocument;
->>>>>>> origin/main

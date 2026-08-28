@@ -5,22 +5,11 @@ import API from "../services/api";
 function Profile() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-<<<<<<< HEAD
-  const [showEdit, setShowEdit] = useState(false);
-  const [editUsername, setEditUsername] = useState("");
-const [editEmail, setEditEmail] = useState("");
-=======
->>>>>>> origin/main
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-<<<<<<< HEAD
-
-
-=======
->>>>>>> origin/main
         const response = await API.get("/auth/profile");
         setUser(response.data.user);
       } catch (error) {
@@ -37,35 +26,7 @@ const [editEmail, setEditEmail] = useState("");
 
     fetchProfile();
   }, [navigate]);
-<<<<<<< HEAD
-const handleEditClick = () => {
-  setEditUsername(user.username || "");
-  setEditEmail(user.email || "");
-  setShowEdit(true);
-};
-const handleUpdateProfile = async () => {
-  try {
-    const response = await API.put("/auth/profile", {
-      username: editUsername,
-      email: editEmail,
-    });
 
-    setUser(response.data.user);
-    setShowEdit(false);
-
-    alert("Profile updated successfully!");
-  } catch (error) {
-    console.error("Update profile error:", error);
-
-    alert(
-      error.response?.data?.message ||
-      "Failed to update profile"
-    );
-  }
-};
-=======
-
->>>>>>> origin/main
   const handleLogout = () => {
     localStorage.removeItem("token");
     navigate("/login");
@@ -104,55 +65,9 @@ const handleUpdateProfile = async () => {
         </div>
 
         <div className="mt-10 space-y-4">
-<<<<<<< HEAD
-         <button
-  onClick={handleEditClick}
-  className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700"
->
-  Edit Profile
-</button>
-{showEdit && (
-  <div className="mt-6 p-6 border rounded-lg bg-gray-50">
-    <h2 className="text-xl font-bold mb-4">Edit Profile</h2>
-<input
-  type="text"
-  placeholder="Username"
-  value={editUsername}
-  onChange={(e) => setEditUsername(e.target.value)}
-  className="w-full border p-3 rounded-lg mb-4"
-/>
-
-    <input
-  type="email"
-  placeholder="Email"
-  value={editEmail}
-  onChange={(e) => setEditEmail(e.target.value)}
-  className="w-full border p-3 rounded-lg mb-4"
-/>
-
-    <div className="flex gap-3">
-      <button
-  onClick={handleUpdateProfile}
-  className="flex-1 bg-green-600 text-white py-3 rounded-lg hover:bg-green-700"
->
-  Save Changes
-</button>
-
-      <button
-        type="button"
-        onClick={() => setShowEdit(false)}
-        className="flex-1 bg-gray-500 text-white py-3 rounded-lg hover:bg-gray-600"
-      >
-        Cancel
-      </button>
-    </div>
-  </div>
-)}
-=======
           <button className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700">
             Edit Profile
           </button>
->>>>>>> origin/main
 
           <button className="w-full bg-yellow-500 text-white py-3 rounded-lg hover:bg-yellow-600">
             Change Password
