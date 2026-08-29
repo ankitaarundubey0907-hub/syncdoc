@@ -45,7 +45,7 @@ const getIO = () => {
         throw new Error("Socket.io is not initialized.");
     }
 
-    return io;
+    return io; //ok
 };
 
 module.exports = {
